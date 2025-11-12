@@ -26,10 +26,10 @@ MIRROR/
 │   ├── agent/
 │   ├── notebook/
 │   ├── src/
-│   ├── step1/               # Step 1: Data collection and preprocessing
-│   ├── step2/               # Step 2: Cognitive reframing generation
-│   ├── step3/               # Step 3: Multimodal alignment and annotation
-│   ├── step4/               # Step 4: Dataset refinement and final packaging
+│   ├── step1/               # Step 1: Multimodal Dialogue Design
+│   ├── step2/               # Step 2: Counseling Screenplay Generation
+│   ├── step3/               # Step 3: Facial Expression Synthesis
+│   ├── step4/               # Step 4: Filtering for Quality and Safety
 │   ├── utils/
 │   └── README.md            # Detailed usage and data preparation guide
 │
