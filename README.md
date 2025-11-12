@@ -3,8 +3,7 @@
 This repository will provide the official code and dataset for our paper:
 [🪞 MIRROR: Multimodal Cognitive Reframing Therapy for Rolling with Resistance](https://aclanthology.org/2025.emnlp-main.751/)
 
-We are in the process of preparing the release.  
-The code and dataset will be made publicly available shortly.
+The official code is now available, and the dataset will be released in the near future.
 
 ### **🔧 Environment Setup**
 
