@@ -3,7 +3,18 @@
 This repository will provide the official code and dataset for our paper:
 [🪞 MIRROR: Multimodal Cognitive Reframing Therapy for Rolling with Resistance](https://aclanthology.org/2025.emnlp-main.751/)
 
-The official code is now available, and the dataset will be released in the near future.
+### ⭐ MIRROR Dataset Overview
+
+**MIRROR** is a synthetic vision–language dataset designed to support **multimodal cognitive reframing** for client resistance.
+
+To comply with the CelebA license, **the dataset does not include any images**.  
+However, we provide the **full image synthesis pipeline**, enabling users to regenerate the edited facial expression images after downloading the original datasets from their official providers.
+
+You can find the **full data synthesis pipeline** in the `mirror/` directory.
+
+For detailed dataset documentation, please refer to the HuggingFace page:  
+👉 [https://huggingface.co/datasets/multimodal-reframing/mirror](https://huggingface.co/datasets/multimodal-reframing/mirror)
+
 
 ### **🔧 Environment Setup**
 
