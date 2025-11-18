@@ -59,68 +59,21 @@ def build_negative_prompt(base_negative: str) -> str:
         "low quality, normal quality, jpeg artifacts, signature, watermark, "
         "username, blurry, " + base_negative
     )
-    
+
 def write_photomaker_prompts(entire_df, llm_results, celeba_df, save_path):
-    """Write refined photomaker prompts to file."""
-    
-    with open(save_path, "w", encoding="utf-8") as save_file:
-        for entry in tqdm(llm_results, total=len(llm_results)):
-            dialog_idx = "-".join(entry["custom_id"].split("-")[:4])
-
-            try:
-                row = get_row_by_index(entire_df, dialog_idx)
-            except KeyError as e:
-                print(e)
-                continue
-
-            identity = row["identity"]
-
-            try:
-                identity_row = get_identity_row(celeba_df, identity)
-            except KeyError as e:
-                print(e)
-                continue
-
-            gender = determine_gender(identity_row)
-            image_paths = list(identity_row["img_path"])
-
-            try:
-                prompts = parse_description(entry["response"])
-            except Exception:
-                print(f"[SKIP] Parsing failed for custom_id: {entry['custom_id']}")
-                continue
-
-            new_entry = {
-                "idx": entry["custom_id"],
-                "dialog_idx": dialog_idx,
-                "image_path": image_paths,
-                "prompt": build_prompt(gender, prompts["prompt"]),
-                "negative_prompt": build_negative_prompt(prompts["negative_prompt"])
-            }
-
-            json.dump(new_entry, save_file, ensure_ascii=False)
-            save_file.write("\n")
-
-def write_photomaker_prompts(entire_df, llm_results, proc_celeba_df, save_path):
     save_file = open(save_path, 'w')
     for entry in tqdm(llm_results, total=len(llm_results)):
         dialog_idx = '-'.join(entry['custom_id'].split("-")[:4])
 
         try:
             row = get_row_by_index(entire_df, dialog_idx)
-        except Exception as e:
-            print(e)
-            continue
-        
-        identity = row['identity']
-        try:
-            identity_row = get_identity_row(celeba_df, identity)
+            identity_row = get_identity_row(celeba_df, row['identity'])
         except Exception as e:
             print(e)
             continue
         
         gender = determine_gender(identity_row)
-        image_paths = [identity_row['img_path']]
+        image_path = identity_row['img_path'] # celeba/img_align_celeba/####.jpg
         try:
             prompts = parse_description(entry['response'])
             prompt_str = build_prompt(gender=gender.lower().strip(), base_prompt=prompts['prompt'])
@@ -129,13 +82,12 @@ def write_photomaker_prompts(entire_df, llm_results, proc_celeba_df, save_path):
             new_entry = {
                 'idx': entry['custom_id'],
                 'dialog_idx': dialog_idx,
-                'image_path': image_paths,
+                'image_path': [image_path],
                 'prompt': prompt_str,
                 'negative_prompt': negative_prompt_str
             }
             json.dump(new_entry, save_file, ensure_ascii=False)
             save_file.write('\n')
-
         except Exception as e:
             raise e
         
