@@ -29,7 +29,7 @@ This step generates conversation scripts based on the Cactus dataset.
 If `--fetch_api` is used, the script will call the GPT API. Otherwise, it will generate prompts in batch mode and save them in `save_dir`.
 
 ```bash
-python -m mirror.step2.run --model gpt-4o-mini --prompt_ver session_v3 --data_path ../data/cactus_data.csv --save_dir ../data/prompts/
+python -m mirror.step2.run_step2 --model gpt-4o-mini --prompt_ver session_v3 --data_path ../data/cactus_data.csv --save_dir ../data/prompts/
 ```
 - `--model`: The language model to use (e.g., gpt-4o-mini).
 - `--prompt_ver`: Version of the prompt template.
@@ -81,9 +81,11 @@ python -m mirror.step3.annotate_llm --prompt_path ../data/llama3_8b_prompt.jsonl
 Using the generated facial expression descriptions, we create prompts for image generation.
 
 ```bash
-python -m mirror.step3.preprocess_for_photomaker --llm_result_path ../data/llama3_8b_result.jsonl --celeba_path ../data/proc_celeba.csv  --save_path photomaker_prompts/prompt.jsonl
+python -m mirror.step3.preprocess_for_photomaker --data_path ../data/mirror_data.csv --llm_result_path ../data/llama3_8b_result.jsonl --celeba_path ../data/proc_celeba.csv  --save_path photomaker_prompts/prompt.jsonl
 ```
-- `--prompt_path`: Path to the LLM-generated facial expression descriptions.
+
+- `--data_path`: Path to the processed `mirror_data.csv` file.
+- `--llm_result_path`: Path to the LLM-generated facial expression descriptions.
 - `--model_name_or_path`: Path to the processed CelebA dataset.
 - `--save_path`: Path to save the PhotoMaker prompts.
 
@@ -91,7 +93,7 @@ python -m mirror.step3.preprocess_for_photomaker --llm_result_path ../data/llama
 Finally, we generate facial expression images using PhotoMaker.
 
 ```bash
-python -m mirror.step3.run --prompt_path photomaker_prompts/prompt.jsonl --save_dir ../data/images/ 
+python -m mirror.step3.run_step3 --prompt_path photomaker_prompts/prompt.jsonl --save_dir ../data/images/ 
 ```
 - `--prompt_path`: Path to the prompt JSON file.
 - `--save_dir`: Directory where generated images will be saved.
